@@ -59,7 +59,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(RepositoryMappingException.class)
-    protected ResponseEntity<?> handleRepositoryMappingExceptionn(final RepositoryMappingException ex,
+    protected ResponseEntity<?> handleRepositoryMappingException(final RepositoryMappingException ex,
                                                                      final WebRequest request)
     {
         return provideDefaultErrorResponse(ex, request, HttpStatus.NOT_FOUND);

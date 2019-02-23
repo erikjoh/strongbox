@@ -111,7 +111,8 @@ public class WebConfig
     }
 
     @Bean
-    RepositoryMappingArgumentResolver repositoryMappingArgumentResolver() {
+    RepositoryMappingArgumentResolver repositoryMappingArgumentResolver()
+    {
         return new RepositoryMappingArgumentResolver();
     }
 
@@ -288,7 +289,8 @@ public class WebConfig
 
     @Override
     public void addArgumentResolvers(
-            List<HandlerMethodArgumentResolver> argumentResolvers) {
+            List<HandlerMethodArgumentResolver> argumentResolvers)
+    {
         argumentResolvers.add(repositoryMappingArgumentResolver());
     }
 }
