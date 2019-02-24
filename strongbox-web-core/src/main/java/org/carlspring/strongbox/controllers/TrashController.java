@@ -38,6 +38,15 @@ public class TrashController
     private RepositoryPathResolver repositoryPathResolver;
 
 
+    /**
+     * Deletes trash for a specific repository. 
+     *
+     * @param repository
+     *             - Repository to delete trash from.
+     * @param accept
+     *             - Accept header string.
+     * @return A ResponseEntity for the specific request.
+     */
     @ApiOperation(value = "Used to delete the trash for a specified repository.")
     @ApiResponses(value = { @ApiResponse(code = 200,
                                          message = "The trash for ${storageId}:${repositoryId}' was removed successfully."),
@@ -75,6 +84,13 @@ public class TrashController
         return ResponseEntity.ok(getResponseEntityBody(message, accept));
     }
 
+    /**
+     * Deletes trash for all repositories.
+     *
+     * @param accept
+     *             - Accept header string.
+     * @return A ResponseEntity for the request.
+     */
     @ApiOperation(value = "Used to delete the trash for all repositories.")
     @ApiResponses(value = { @ApiResponse(code = 200,
                                          message = "The trash for all repositories was successfully removed."),
@@ -105,6 +121,17 @@ public class TrashController
         return ResponseEntity.ok(getResponseEntityBody(message, accept));
     }
 
+    /**
+     * Restores deleted trash from a specific repository.
+     *
+     * @param repository
+     *             - Repository to restore (undelete) data from.
+     * @param path
+     *             - Path to the trash to restore (undelete)
+     * @param accept 
+     *             - Accept header string.
+     * @return A ResponseEntity for the specific request.
+     */
     @ApiOperation(value = "Used to undelete the trash for a path under a specified repository.")
     @ApiResponses(value = { @ApiResponse(code = 200,
                                          message = "The trash for '${storageId}:${repositoryId}' was restored successfully."),
@@ -150,6 +177,15 @@ public class TrashController
         return ResponseEntity.ok(getResponseEntityBody(message, accept));
     }
 
+    /**
+     * Restores deleted trash from a specific repository.
+     * 
+     * @param repository
+     *             - Repository to undelete trash from.
+     * @param accept
+     *             - Accept header string.
+     * @return A ResponseEntity for the specific request.
+     */
     @ApiOperation(value = "Used to undelete the trash for a specified repository.")
     @ApiResponses(value = { @ApiResponse(code = 200,
                                          message = "The trash for '${storageId}:${repositoryId}' was restored successfully."),
@@ -196,6 +232,13 @@ public class TrashController
                                                        "has been restored successfully.", accept));
     }
 
+    /**
+     * Restores deleted trash from a specific repository.
+     * 
+     * @param accept
+     *             - Accept header string.
+     * @return A ResponseEntity for the specific request.
+     */
     @ApiOperation(value = "Used to undelete the trash for all repositories.")
     @ApiResponses(value = { @ApiResponse(code = 200,
                                          message = "The trash for all repositories was successfully restored."),
