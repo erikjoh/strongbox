@@ -1,15 +1,7 @@
 
 pipeline {
-    agent {
-        node {
-            label 'master'
-            customWorkspace workspace().getUniqueWorkspacePath()
-        }
-    }
-    options {
-        timeout(time: 2, unit: 'HOURS')
-        disableConcurrentBuilds()
-    }
+    agent any
+
     stages {
         stage('Building')
         {
