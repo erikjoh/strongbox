@@ -50,6 +50,48 @@ test to fail. This is handled by asserting on different error messages. The
 existing TrashController tests should be considered integration tests rather 
 than as unit tests.
 
+## Test requirements 
+
+### RepositoryMappingArgumentResolver
+
+We implement full node-coverage (NC) for the `RepositoryMappingArgumentResolver`
+class. The condensation graph below provides a overview of the structure of the 
+`resolveArgument` function. In addition to this both outcomes of `supportsParameter`
+are tested as well. The tests are implemented in [RepositoryMappingArgumentResolverTest](./strongbox-web-core/src/test/java/org/carlspring/strongbox/controllers/RepositoryMappingArgumentResolverTest.java).
+
+[![Condensation graph for resolveArgument](./doc-resources/Condensation_graph_resolve_argument.svg)]
+
+```
+C1: storage == null
+C2: repository == null
+C3: !repository.isInService()
+```
+
+**TR1:** n0
+
+**TR2:** n1
+
+**TR3:** n2
+
+**TR4:** n3
+
+**TR5:** n4
+
+**TR6:** n5
+
+**TR7:** n6
+
+**TR8:** n7
+
+**TR9:** n8
+
+**TR10:** getPathParameters()
+
+**TR11:** supportsParameter() == true
+
+**TR12:** supportsParameter() == false
+
+
 ## The refactoring carried out
 
 (Link to) a UML diagram and its description
