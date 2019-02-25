@@ -87,11 +87,9 @@ C3: !repository.isInService()
 
 **TR9:** n8
 
-**TR10:** getPathParameters()
+**TR10:** supportsParameter() == true
 
-**TR11:** supportsParameter() == true
-
-**TR12:** supportsParameter() == false
+**TR11:** supportsParameter() == false
 
 
 ## The refactoring carried out
