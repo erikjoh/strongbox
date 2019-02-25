@@ -59,13 +59,15 @@ class. The condensation graph below provides a overview of the structure of the
 `resolveArgument` function. In addition to this both outcomes of `supportsParameter`
 are tested as well. The tests are implemented in [RepositoryMappingArgumentResolverTest](./strongbox-web-core/src/test/java/org/carlspring/strongbox/controllers/RepositoryMappingArgumentResolverTest.java).
 
-[![Condensation graph for resolveArgument](./doc-resources/Condensation_graph_resolve_argument.svg)]
+![Condensation graph for resolveArgument](./doc-resources/Condensation_graph_resolve_argument.svg)
 
 ```
 C1: storage == null
 C2: repository == null
 C3: !repository.isInService()
 ```
+
+#### Test requirements
 
 **TR1:** n0
 
