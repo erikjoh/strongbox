@@ -55,6 +55,8 @@ Contains a dummy implementation of a Jersey application. Sometimes useful for li
 - [strongbox-web-core](https://github.com/strongbox/strongbox/tree/master/strongbox-web-core)/  
 This is the web module which contains all the controllers.
 
+Our focus has been on the strongbox-web-core module since that is the module we refactored. The module is used for the REST API where repositories can be created, altered or deleted but there are also other operations available like handling cron jobs or configuring the server itself. The REST API is built on Spring and uses the MVC pattern. Most views are in JSON or XML format even tough HTML or plain text rendering is sometimes used. By using Spring a lot of the API functionality comes out of the box and by using various code annotations instructions are given to Spring of how to configure the API. Furthermore, dependency injection is widely using throughout the project. This is done by using the @Inject annotation which can inject dependencies registered for injection. This is done with for example the Logger class which is used in almost every controller in strongbox-web-core for logging during runtime. The logger is also widely used throughout the entire system.
+
 ## Selected issue(s)
 
 Title: HandlerMethodArgumentResolver to resolve Repository instance based on `{storageId}/{repositoryId}` path variables #528
