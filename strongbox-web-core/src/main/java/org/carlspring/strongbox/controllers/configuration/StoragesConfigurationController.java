@@ -1,5 +1,6 @@
 package org.carlspring.strongbox.controllers.configuration;
 
+import org.carlspring.strongbox.controllers.RepositoryMapping;
 import org.carlspring.strongbox.forms.configuration.ProxyConfigurationForm.ProxyConfigurationFormChecks;
 import org.carlspring.strongbox.forms.configuration.RepositoryForm;
 import org.carlspring.strongbox.forms.configuration.StorageForm;
@@ -314,32 +315,9 @@ public class StoragesConfigurationController
                                          message = "The repository ${storageId}:${repositoryId} was not found!") })
     @PreAuthorize("hasAuthority('CONFIGURATION_VIEW_REPOSITORY')")
     @GetMapping(value = "/{storageId}/{repositoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getRepository(@ApiParam(value = "The storageId", required = true)
-                                        @PathVariable final String storageId,
-                                        @ApiParam(value = "The repositoryId", required = true)
-                                        @PathVariable final String repositoryId)
+    public ResponseEntity getRepository(@RepositoryMapping Repository repository)
     {
-        try
-        {
-            Repository repository = configurationManagementService.getConfiguration()
-                                                                  .getStorage(storageId)
-                                                                  .getRepository(repositoryId);
-
-            if (repository != null)
-            {
-                return ResponseEntity.ok(repository);
-            }
-            else
-            {
-                return getFailedResponseEntity(HttpStatus.NOT_FOUND, REPOSITORY_NOT_FOUND,
-                                               MediaType.APPLICATION_JSON_VALUE);
-            }
-        }
-        catch (Exception e)
-        {
-            return getExceptionResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, FAILED_GET_REPOSITORY, e,
-                                              MediaType.APPLICATION_JSON_VALUE);
-        }
+        return ResponseEntity.ok(repository);
     }
 
     @ApiOperation(value = "Deletes a repository.")
