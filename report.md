@@ -95,7 +95,7 @@ than as unit tests.
 We implement full node-coverage (NC) for the `RepositoryMappingArgumentResolver`
 class. The condensation graph below provides a overview of the structure of the 
 `resolveArgument` function. In addition to this both outcomes of `supportsParameter`
-are tested as well. The tests are implemented in [RepositoryMappingArgumentResolverTest](./strongbox-web-core/src/test/java/org/carlspring/strongbox/controllers/RepositoryMappingArgumentResolverTest.java).
+are tested as well. The tests are implemented in [RepositoryMappingArgumentResolverTest](https://github.com/Eika96/strongbox/blob/develop/strongbox-web-core/src/test/java/org/carlspring/strongbox/controllers/RepositoryMappingArgumentResolverTest.java).
 
 ![Condensation graph for resolveArgument](./doc-resources/Condensation_graph_resolve_argument.svg)
 
@@ -105,25 +105,26 @@ C2: repository == null
 C3: !repository.isInService()
 ```
 
-#### Test requirements
+#### Test requirements and functional requirements tracability
+The following requirements are tested in the added test case. Some of them are linked to a functional requirement in the SRS (SRS.md) and for tracability that is written in parentheses after the requirement.
 
 **TR1:** n0
 
-**TR2:** n1
+**TR2:** n1 (Corresponds to functional requirement R2)
 
 **TR3:** n2
 
 **TR4:** n3
 
-**TR5:** n4
+**TR5:** n4 (Corresponds to functional requirement R3)
 
 **TR6:** n5
 
-**TR7:** n6
+**TR7:** n6 (Corresponds to functional requirement R4)
 
 **TR8:** n7
 
-**TR9:** n8
+**TR9:** n8 (Corresponds to functional requirement R1)
 
 **TR10:** supportsParameter() == true
 
