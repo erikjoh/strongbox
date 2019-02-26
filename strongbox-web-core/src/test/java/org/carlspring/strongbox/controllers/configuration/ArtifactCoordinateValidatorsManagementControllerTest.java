@@ -135,7 +135,7 @@ public class ArtifactCoordinateValidatorsManagementControllerTest
                .peek()
                .then()
                .statusCode(HttpStatus.NOT_FOUND.value())
-               .body("message", equalTo(NOT_FOUND_STORAGE_MESSAGE));
+               .body("message", equalTo("The specified storageId does not exist!"));
     }
 
     @Test
@@ -150,7 +150,7 @@ public class ArtifactCoordinateValidatorsManagementControllerTest
                .peek()
                .then()
                .statusCode(HttpStatus.NOT_FOUND.value())
-               .body("message", equalTo(NOT_FOUND_REPOSITORY_MESSAGE));
+               .body("message", equalTo("The specified repositoryId does not exist!"));
     }
 
     @ParameterizedTest
