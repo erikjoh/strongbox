@@ -132,7 +132,9 @@ C3: !repository.isInService()
 
 ## The refactoring carried out
 
-(Link to) a UML diagram and its description
+UML before refactor: [https://repository.genmymodel.com/alan.ihre/se-assignment-4-old](https://repository.genmymodel.com/alan.ihre/se-assignment-4-old).
+
+UML after refactor: [https://repository.genmymodel.com/alan.ihre/se-assignment-4](https://repository.genmymodel.com/alan.ihre/se-assignment-4).
 
 ## Test logs
 
