@@ -166,3 +166,10 @@ On average each member of the group spent the following time doing:
 
 It can be hard to clearly understand the issues of a new project since they are written with a different target audience. 
 For us as an external helping hand it's important for the documentation to be well written so we can easily get started with the project. Since this is not the larged project out there, but we still ran into some issues with e.g. onboarding, this shows the impotance of good documentation throughout code, text-files and links etc. 
+
+## Contributions
+Max: Documentation and report
+Anton: Documentation and report
+Erik: Setting up repository and Jenkins, refactoring
+Nicklas: Responsible for testing
+Alan: Refactoring and UML
