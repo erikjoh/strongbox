@@ -2,7 +2,7 @@
 
 ## 1 Introduction
 
-<some overview>
+Strongbox is an Artifact Repository Manager written in Java, one of its open issues (https://github.com/strongbox/strongbox/issues/528) requests an repository mapping argument resolver to check the validity of a repository. This project aims to solve that issue by refactoring the code.
 
 ### 1.1 Purpose
 
@@ -14,7 +14,7 @@ References to code within the project are referred not by their full path but us
 
 ## 2 Product perspective
 
-The repository mapping argument resolver is used by functions within the carlspring/strongbox/controllers/TrashController.java to ensure the validity of repositories.
+The new repository mapping argument resolver is used by functions within the carlspring/strongbox/controllers/TrashController to ensure the validity of repositories. The use of the argument resolver could be expanded as the operation is done in other parts of the project.
 
 ## 3 Product functions
 
@@ -27,7 +27,7 @@ ID: R1
 
 Title: Happy path
 
-Description: Given a repository id and path if neither R2, R3 or R4 raises errors the function should return the repository
+Description: Given a repository id and path if neither R2, R3 or R4 raises errors resolveArgument should return the repository
 
 DEP: R2, R3, R4
 
@@ -37,7 +37,7 @@ ID: R2
 
 Title: Storage existence
 
-Description: Given a repository id and path which is located on a non-existant storage an RepositoryMappingException should be raised
+Description: Given a repository id and path which is located on a non-existant storage an RepositoryMappingException should be raised by resolveArgument
 
 DEP:
 
@@ -46,7 +46,7 @@ ID: R3
 
 Title: Repository existence
 
-Description: Given a repository id and path which where the repository is invalid RepositoryMappingException should be raised
+Description: Given a repository id and path which where the repository is invalid RepositoryMappingException should be raised by resolveArgument
 
 DEP: R2
 
@@ -55,12 +55,11 @@ ID: R4
 
 Title: Is in service
 
-Description: Given a repository id and path which where the repository is not in service an 
-RepositoryMappingException should be raised
+Description: Given a repository id and path which where the repository is not in service an RepositoryMappingException should be raised by resolveArgument
 
 DEP: R2, R3
 
 
 ## 6 Verification
 
-The test suite should be updated to achieve 100% code coverage for the added and refactored functions
+The test suite should be updated to achieve 100% code coverage for the added and refactored functions.
