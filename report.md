@@ -142,28 +142,25 @@ The refactoring itself is documented by the git log.
 
 ## Effort spent
 
-For each team member, how much time was spent in
+On average each member of the group spent the following time doing:  
 
-1. plenary discussions/meetings;
+1. plenary discussions/meetings; 1.5 hours
 
-2. discussions within parts of the group;
+2. discussions within parts of the group; 3 hours
 
-3. reading documentation;
+3. reading documentation;  3 hours
 
-4. configuration;
+4. configuration; 1 hour
 
-5. analyzing code/output;
+5. analyzing code/output; 2 hours
 
-6. writing documentation;
+6. writing documentation; 6 hours
 
-7. writing code;
+7. writing code; 6 hours
 
-8. running code?
+8. running code? 2 hours
 
 ## Overall experience
 
-What are your main take-aways from this project? What did you learn?
-
-It can be hard to clearly understand the issues of a new project since they are written with a different target audiance. Good documentation for onboarding is crucial.
-
-Is there something special you want to mention here?
+It can be hard to clearly understand the issues of a new project since they are written with a different target audience. 
+For us as an external helping hand it's important for the documentation to be well written so we can easily get started with the project. Since this is not the larged project out there, but we still ran into some issues with e.g. onboarding, this shows the impotance of good documentation throughout code, text-files and links etc. 
