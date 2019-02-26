@@ -1,7 +1,9 @@
 package org.carlspring.strongbox.controllers;
 
 import org.carlspring.strongbox.controllers.support.ErrorResponseEntityBody;
+import org.carlspring.strongbox.controllers.support.ResponseEntityBody;
 import org.carlspring.strongbox.data.criteria.QueryParserException;
+import org.carlspring.strongbox.validation.RepositoryMappingException;
 import org.carlspring.strongbox.validation.RequestBodyValidationError;
 import org.carlspring.strongbox.validation.RequestBodyValidationException;
 
@@ -56,6 +58,28 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler
     {
         return provideValidationErrorResponse(ex, request);
     }
+
+    @ExceptionHandler(RepositoryMappingException.class)
+    protected ResponseEntity<?> handleRepositoryMappingException(final RepositoryMappingException ex,
+                                                                 final WebRequest request)
+    {
+        Object body;
+        HttpHeaders headers = new HttpHeaders();
+        MediaType contentType = requestedContent(request);
+        headers.set(HttpHeaders.CONTENT_TYPE, contentType.toString());
+
+        if (contentType.equals(MediaType.TEXT_PLAIN) || contentType.equals(MediaType.TEXT_HTML))
+        {
+            body = ex.getMessage();
+        }
+        else
+        {
+            body = new ResponseEntityBody(ex.getMessage());
+        }
+
+        return super.handleExceptionInternal(ex, body, headers, HttpStatus.NOT_FOUND, request);
+    }
+
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<?> handleUnknownError(Exception ex,

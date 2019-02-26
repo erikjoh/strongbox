@@ -37,13 +37,13 @@ public abstract class BaseArtifactController
                             @ApiResponse(code = 400, message = "An error occurred.") })
     @PreAuthorize("hasAuthority('ARTIFACTS_DEPLOY')")
     @PutMapping(value = "{storageId}/{repositoryId}/{path:.+}")
-    public ResponseEntity upload(@ApiParam(value = "The storageId", required = true)
-                                 @PathVariable(name = "storageId") String storageId,
-                                 @ApiParam(value = "The repositoryId", required = true)
-                                 @PathVariable(name = "repositoryId") String repositoryId,
+    public ResponseEntity upload(@RepositoryMapping Repository repository,
                                  @PathVariable String path,
                                  HttpServletRequest request)
     {
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
+
         try
         {
             RepositoryPath repositoryPath = repositoryPathResolver.resolve(storageId, repositoryId, path);

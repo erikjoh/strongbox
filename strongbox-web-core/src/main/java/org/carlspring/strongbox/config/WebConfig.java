@@ -1,6 +1,7 @@
 package org.carlspring.strongbox.config;
 
 import org.carlspring.strongbox.configuration.StrongboxSecurityConfig;
+import org.carlspring.strongbox.controllers.RepositoryMappingArgumentResolver;
 import org.carlspring.strongbox.converters.PrivilegeListFormToPrivilegeListConverter;
 import org.carlspring.strongbox.converters.RoleFormToRoleConverter;
 import org.carlspring.strongbox.converters.RoleListFormToRoleListConverter;
@@ -46,6 +47,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.filter.RequestContextFilter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -106,6 +108,12 @@ public class WebConfig
     RequestContextFilter requestContextFilter()
     {
         return new RequestContextFilter();
+    }
+
+    @Bean
+    RepositoryMappingArgumentResolver repositoryMappingArgumentResolver()
+    {
+        return new RepositoryMappingArgumentResolver();
     }
 
     @Bean
@@ -277,5 +285,12 @@ public class WebConfig
         viewResolver.setOrder(1);
 
         return viewResolver;
+    }
+
+    @Override
+    public void addArgumentResolvers(
+            List<HandlerMethodArgumentResolver> argumentResolvers)
+    {
+        argumentResolvers.add(repositoryMappingArgumentResolver());
     }
 }

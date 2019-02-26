@@ -151,31 +151,21 @@ public class BrowseController extends BaseArtifactController
                 produces = { MediaType.TEXT_PLAIN_VALUE,
                              MediaType.TEXT_HTML_VALUE,
                              MediaType.APPLICATION_JSON_VALUE })
-    public Object repositoryContent(@ApiParam(value = "The storageId", required = true)
-                                    @PathVariable("storageId") String storageId,
-                                    @ApiParam(value = "The repositoryId", required = true)
-                                    @PathVariable("repositoryId") String repositoryId,
+    public Object repositoryContent(@RepositoryMapping Repository repository,
                                     @ApiParam(value = "The repository path", required = false)
                                     @PathVariable("path") String rawPath,
                                     HttpServletRequest request,
                                     ModelMap model,
                                     @RequestHeader(value = HttpHeaders.ACCEPT, required = false) String acceptHeader)
     {
-        logger.debug("Requested browsing repository content at {}/{}/{} ", storageId, repositoryId, rawPath);
 
         try
         {
-            Storage storage = configurationManager.getConfiguration().getStorage(storageId);
-            if (storage == null)
-            {
-                return getNotFoundResponseEntity("The requested storage was not found.", acceptHeader);
-            }
+            Storage storage = repository.getStorage();
+            String storageId = storage.getId();
+            String repositoryId = repository.getId();
 
-            Repository repository = storage.getRepository(repositoryId);
-            if (repository == null)
-            {
-                return getNotFoundResponseEntity("The requested repository was not found.", acceptHeader);
-            }
+            logger.debug("Requested browsing repository content at {}/{}/{} ", storageId, repositoryId, rawPath);
 
             final RepositoryPath repositoryPath = repositoryPathResolver.resolve(repository, rawPath);
             if (repositoryPath == null || !Files.exists(repositoryPath))
