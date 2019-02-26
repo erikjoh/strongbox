@@ -30,6 +30,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.anyString;
 
 /**
+ * Implements unit tests for the {@code RepositoryMappingArgumentResolver}
+ * class.
+ *
  * @author Nicklas Hersén
  */
 
@@ -205,6 +208,30 @@ public class RepositoryMappingArgumentResolverTest
                                         () -> rme.resolveArgument(null, null, nReq, null));
 
         assertEquals("The specified repositoryId does not exist!", thrown.getMessage());
+    }
+
+    /**
+     * Ensure taht a RepositoryMappingException is thrown when null 
+     * is returned rather than a vaild storage.
+     */
+    @Test
+    public void testResolveArgumentNullStorage()
+    {
+        RepoMockExtension rme = new RepoMockExtension();
+        Configuration mockConfig = mock(Configuration.class);
+        when(mockConfig.getStorage(storageID))
+            .thenReturn(null);
+
+        ConfigurationManager cManager = mock(ConfigurationManager.class);
+        when(cManager.getConfiguration()).thenReturn(mockConfig);
+
+        rme.setConfigurationManager(cManager);
+        NativeWebRequest nReq = generateMockNativeWebRequest();
+
+        Exception thrown = assertThrows(RepositoryMappingException.class,
+                                        () -> rme.resolveArgument(null, null, nReq, null));
+
+        assertEquals("The specified storageId does not exist!", thrown.getMessage());
     }
 
     private NativeWebRequest generateMockNativeWebRequest()
