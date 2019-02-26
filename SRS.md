@@ -14,7 +14,9 @@ References to code within the project are referred not by their full path but us
 
 ## 2 Product perspective
 
-The new repository mapping argument resolver is used by functions within the carlspring/strongbox/controllers/TrashController to ensure the validity of repositories. The use of the argument resolver could be expanded as the operation is done in other parts of the project.
+The new repository mapping argument resolver is used by functions within the carlspring/strongbox/controllers/TrashController to ensure the validity of repositories. The use of the argument resolver could be expanded as the operation is done in other parts of the project. However this use is beyond the scope of the issue.
+
+The inclusion of a new exception will affect carlspring/strongbox/controllers/DefaultExceptionHandler.java and adding the handler will affect carlspring/strongbox/config/WebConfig.java.
 
 ## 3 Product functions
 
