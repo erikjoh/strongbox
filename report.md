@@ -10,7 +10,7 @@ Name: Strongbox
 
 URL: https://github.com/strongbox/strongbox
 
-Strongbox is an Artifact Repository Manager written in Java, it allows you to store binary artifacts. It has both search and access control functionality.
+Strongbox is an Artifact Repository Manager written in Java, it allows you to store binary artifacts. It aims to be an easy an reliable platform and support any repository layout.
 
 ## Architectural overview (optional, as one item for P+)
 
@@ -20,7 +20,7 @@ Title: HandlerMethodArgumentResolver to resolve Repository instance based on `{s
 
 URL: https://github.com/strongbox/strongbox/issues/528
 
-Summary in one or two sentences:
+The issue request an new repository mapping argument resolver which will check the validity of a given repository. This handler could be used in many parts of the project but the example given in the issue is to add the resolver to the ThrashController.
 
 ## Onboarding experience
 
@@ -125,5 +125,7 @@ For each team member, how much time was spent in
 ## Overall experience
 
 What are your main take-aways from this project? What did you learn?
+
+It can be hard to clearly understand the issues of a new project since they are written with a different target audiance. Good documentation for onboarding is crucial.
 
 Is there something special you want to mention here?
