@@ -3,6 +3,7 @@ package org.carlspring.strongbox.controllers.layout.nuget;
 import org.carlspring.strongbox.artifact.ArtifactTag;
 import org.carlspring.strongbox.artifact.coordinates.PathNupkg;
 import org.carlspring.strongbox.controllers.BaseArtifactController;
+import org.carlspring.strongbox.controllers.RepositoryMapping;
 import org.carlspring.strongbox.data.criteria.Expression.ExpOperator;
 import org.carlspring.strongbox.data.criteria.Paginator;
 import org.carlspring.strongbox.data.criteria.Predicate;
@@ -85,10 +86,10 @@ public class NugetArtifactController extends BaseArtifactController
 
     @Inject
     private RepositoryProviderRegistry repositoryProviderRegistry;
-    
+
     @Inject
     private RepositorySearchEventListener repositorySearchEventListener;
-    
+
     @Inject
     private RepositoryPathResolver repositoryPathResolver;
 
@@ -96,11 +97,12 @@ public class NugetArtifactController extends BaseArtifactController
     @DeleteMapping(path = { "{storageId}/{repositoryId}/{packageId}/{version}" })
     @PreAuthorize("hasAuthority('ARTIFACTS_DEPLOY')")
     public ResponseEntity deletePackage(@RequestHeader(name = "X-NuGet-ApiKey", required = false) String apiKey,
-                                        @ApiParam(value = "The storageId", required = true) @PathVariable(name = "storageId") String storageId,
-                                        @ApiParam(value = "The repositoryId", required = true) @PathVariable(name = "repositoryId") String repositoryId,
+                                        @RepositoryMapping Repository repository,
                                         @PathVariable("packageId") String packageId,
                                         @PathVariable("version") String version)
     {
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
         logger.info(String.format("Nuget delete request: storageId-[%s]; repositoryId-[%s]; packageId-[%s]", storageId, repositoryId, packageId));
 
         RepositoryPath path = repositoryPathResolver.resolve(storageId, repositoryId, String.format("%s/%s/%s.nuspec", packageId, version, packageId));;
@@ -119,28 +121,28 @@ public class NugetArtifactController extends BaseArtifactController
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-        
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    
+
     @GetMapping(path = { "{storageId}/{repositoryId}/Search()/$count" }, produces = MediaType.TEXT_PLAIN)
-    public ResponseEntity<String> countPackages(@ApiParam(value = "The storageId", required = true) @PathVariable(name = "storageId") String storageId,
-                                                @ApiParam(value = "The repositoryId", required = true) @PathVariable(name = "repositoryId") String repositoryId,
+    public ResponseEntity<String> countPackages(@RepositoryMapping Repository repository,
                                                 @RequestParam(name = "$filter", required = false) String filter,
                                                 @RequestParam(name = "searchTerm", required = false) String searchTerm,
                                                 @RequestParam(name = "targetFramework", required = false) String targetFramework)
     {
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
         String normalizedSearchTerm = normaliseSearchTerm(searchTerm);
-        
+
         NugetSearchRequest nugetSearchRequest = new NugetSearchRequest();
         nugetSearchRequest.setFilter(filter);
         nugetSearchRequest.setSearchTerm(searchTerm);
         nugetSearchRequest.setTargetFramework(targetFramework);
         repositorySearchEventListener.setNugetSearchRequest(nugetSearchRequest);
-        
-        Repository repository = getRepository(storageId, repositoryId);
+
         RepositoryProvider provider = repositoryProviderRegistry.getProvider(repository.getType());
-        
+
         Predicate predicate = createSearchPredicate(filter, normalizedSearchTerm);
         Long count = provider.count(storageId, repositoryId, predicate);
 
@@ -149,8 +151,7 @@ public class NugetArtifactController extends BaseArtifactController
 
     @GetMapping(path = { "{storageId}/{repositoryId}/{searchCommandName:(?:Packages(?:\\(\\))?|Search\\(\\))}" },
                 produces = MediaType.APPLICATION_XML)
-    public ResponseEntity<?> searchPackages(@ApiParam(value = "The storageId", required = true) @PathVariable(name = "storageId") String storageId,
-                                            @ApiParam(value = "The repositoryId", required = true) @PathVariable(name = "repositoryId") String repositoryId,
+    public ResponseEntity<?> searchPackages(@RepositoryMapping Repository repository,
                                             @PathVariable(name = "searchCommandName") String searchCommandName,
                                             @RequestParam(name = "$filter", required = false) String filter,
                                             @RequestParam(name = "$orderby", required = false, defaultValue = "Id") String orderBy,
@@ -161,6 +162,8 @@ public class NugetArtifactController extends BaseArtifactController
                                             HttpServletResponse response)
             throws JAXBException, IOException
     {
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
         String normalizedSearchTerm = normaliseSearchTerm(searchTerm);
         
         NugetSearchRequest nugetSearchRequest = new NugetSearchRequest();
@@ -281,19 +284,19 @@ public class NugetArtifactController extends BaseArtifactController
     }
 
     @GetMapping(path = { "{storageId}/{repositoryId}/FindPackagesById()" }, produces = MediaType.APPLICATION_XML)
-    public ResponseEntity<?> searchPackageById(@PathVariable(name = "storageId") String storageId,
-                                               @PathVariable(name = "repositoryId") String repositoryId,
+    public ResponseEntity<?> searchPackageById(@RepositoryMapping Repository repository,
                                                @RequestParam(name = "id", required = true) String packageId,
                                                HttpServletResponse response)
             throws JAXBException, IOException
     {
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
         String normalisedPackageId = normaliseSearchTerm(packageId);        
-        
+
         NugetSearchRequest nugetSearchRequest = new NugetSearchRequest();
         nugetSearchRequest.setFilter(String.format("Id eq '%s'", packageId));
         repositorySearchEventListener.setNugetSearchRequest(nugetSearchRequest);
-        
-        Repository repository = getRepository(storageId, repositoryId);
+
         RepositoryProvider provider = repositoryProviderRegistry.getProvider(repository.getType());
 
         Paginator paginator = new Paginator();
@@ -424,10 +427,11 @@ public class NugetArtifactController extends BaseArtifactController
     @PreAuthorize("hasAuthority('ARTIFACTS_DEPLOY')")
     @RequestMapping(path = "{storageId}/{repositoryId}/", method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA)
     public ResponseEntity putPackage(@RequestHeader(name = "X-NuGet-ApiKey", required = false) String apiKey,
-                                     @ApiParam(value = "The storageId", required = true) @PathVariable(name = "storageId") String storageId,
-                                     @ApiParam(value = "The repositoryId", required = true) @PathVariable(name = "repositoryId") String repositoryId,
+                                     @RepositoryMapping Repository repository,
                                      HttpServletRequest request)
     {
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
         logger.info(String.format("Nuget push request: storageId-[%s]; repositoryId-[%s]", storageId, repositoryId));
         String contentType = request.getHeader("content-type");
 
