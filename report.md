@@ -1,18 +1,56 @@
 # Report for assignment 4
 
-This is a template for your report. You are free to modify it as needed.
-It is not required to use markdown for your report either, but the report
-has to be delivered in a standard, cross-platform format.
-
 ## Project
 
 Name: Strongbox
 
 URL: https://github.com/strongbox/strongbox
 
-Strongbox is an Artifact Repository Manager written in Java, it allows you to store binary artifacts. It aims to be an easy an reliable platform and support any repository layout.
+Strongbox is an Artifact Repository Manager written in Java which allows you to store binary artifacts. It aims to be an easy an reliable platform and supports any repository layout.
 
 ## Architectural overview (optional, as one item for P+)
+
+The Strongbox project consists of several core modules listed below with its corresponding `README.md` shortly describing its content and purpose: 
+
+- [strongbox-client](https://github.com/strongbox/strongbox/tree/master/strongbox-client)/  
+This is where the artifact client resides.
+- [strongbox-commons](https://github.com/strongbox/strongbox/tree/master/strongbox-commons)/  
+This is where the most common code which is across other modules resides.
+- [strongbox-event-api](https://github.com/strongbox/strongbox/tree/master/strongbox-event-api)/  
+Contains an event API.
+- [strongbox-metadata-core](https://github.com/strongbox/strongbox/tree/master/strongbox-metadata-core)/  
+This contains the most commonly needed code related to Maven metadata.
+- [strongbox-parent](https://github.com/strongbox/strongbox-parent/tree/master)  
+This is the Maven parent which is (and should be) inherited by all modules. It is the right (and only place) to define versions for dependencies and plugins. Versions of dependencies should not be defined in any other pom.xml files in order to ease the maintenance of these across the codebase.
+- [strongbox-resources](https://github.com/strongbox/strongbox/tree/master/strongbox-resources)/  
+This is the place where common resources which can be used by multiple projects reside. The idea is not have to duplicate things such as `logback.xml`, `web.xml`, keystores and so on across the other modules. These resources are copied using the `maven-dependency-plugin`.`
+  - [strongbox-common-resources](https://github.com/strongbox/strongbox/tree/master/strongbox-resources/strongbox-common-resources)/  
+Contains `logback.xml` and keystores.
+  - [strongbox-storage-resources](https://github.com/strongbox/strongbox/tree/master/strongbox-resources/strongbox-storage-resources)/  
+    - [strongbox-storage-api-resources](https://github.com/strongbox/strongbox/tree/master/strongbox-resources/strongbox-storage-resources/strongbox-storage-api-resources)/
+Contains the `strongbox.xml` configuration file.
+    - [strongbox-web-resources](https://github.com/strongbox/strongbox/tree/master/strongbox-resources/strongbox-web-resources)/  
+Contains the `web.xml` and the Jetty configuration files.
+- [strongbox-rest-client](https://github.com/strongbox/strongbox/tree/master/strongbox-rest-client)/  
+Contains the REST API client.
+- [strongbox-security-api](https://github.com/strongbox/strongbox/tree/master/strongbox-security-api)/  
+Contains various security and encryption related classes.
+- [strongbox-storage](https://github.com/strongbox/strongbox/tree/master/strongbox-storage)/  
+Contains the code for the storage related modules.
+  - [strongbox-storage-api](https://github.com/strongbox/strongbox/tree/master/strongbox-storage/strongbox-storage-api)/  
+Contains the most common code for storages (`Storage`, `Repository`, `*LocationResolver`, etc)
+  - [strongbox-storage-indexing](https://github.com/strongbox/strongbox/tree/master/strongbox-storage/strongbox-storage-indexing)/  
+Contains the Lucene indexing code.
+  - [strongbox-storage-metadata](https://github.com/strongbox/strongbox/tree/master/strongbox-storage/strongbox-storage-metadata)/  
+Contains a service wrapper and XML marshalling/unmarshalling for Maven metadata.
+- [strongbox-testing](https://github.com/strongbox/strongbox/tree/master/strongbox-testing)/  
+Contains various very useful base classes for testing
+  - [strongbox-testing-core](https://github.com/strongbox/strongbox/tree/master/strongbox-testing/strongbox-testing-core)/  
+Contains code for generation of valid Maven artifacts.
+  - [strongbox-testing-web](https://github.com/strongbox/strongbox/tree/master/strongbox-testing/strongbox-testing-web)/  
+Contains a dummy implementation of a Jersey application. Sometimes useful for lightweight tests.
+- [strongbox-web-core](https://github.com/strongbox/strongbox/tree/master/strongbox-web-core)/  
+This is the web module which contains all the controllers.
 
 ## Selected issue(s)
 
@@ -24,7 +62,7 @@ The issue request an new repository mapping argument resolver which will check t
 
 ## Onboarding experience
 
-There are build instructions in the projects readme. Some of the links are dead which was annoying and shows a lack of care from the projects side. However we were able to build the project without much hickup anyway.
+There are build instructions in the projects `README.md`. Some of the links are dead which was annoying and shows a lack of care from the projects side. However we were able to build the project without much hickup anyway.
 
 It should be noted that we have not found a way to run a specific test suite 
 without rebuilding the whole project. If we simply attempt to run the tests 
