@@ -249,7 +249,7 @@ public class BrowseControllerTest
                .get(url)
                .prettyPeek()
                .then()
-               .statusCode(HttpStatus.NOT_FOUND.value());   
+               .statusCode(HttpStatus.NOT_FOUND.value());
     }
   
     @Test
