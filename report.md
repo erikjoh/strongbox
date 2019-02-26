@@ -110,21 +110,21 @@ The following requirements are tested in the added test case. Some of them are l
 
 **TR1:** n0
 
-**TR2:** n1 (Corresponds to functional requirement R2)
+**TR2:** n1 (Corresponds to functional requirement R2, tested by test case testResolveArgumentNullStorage)
 
 **TR3:** n2
 
 **TR4:** n3
 
-**TR5:** n4 (Corresponds to functional requirement R3)
+**TR5:** n4 (Corresponds to functional requirement R3, tested by test case testResolveArgumentNullRepo)
 
 **TR6:** n5
 
-**TR7:** n6 (Corresponds to functional requirement R4)
+**TR7:** n6 (Corresponds to functional requirement R4, tested by test case testResolveArgumentRepoNotInService)
 
 **TR8:** n7
 
-**TR9:** n8 (Corresponds to functional requirement R1)
+**TR9:** n8 (Corresponds to functional requirement R1, tested by test case testResolveArgumentSuccess)
 
 **TR10:** supportsParameter() == true
 
