@@ -64,4 +64,4 @@ DEP: R2, R3
 
 ## 6 Verification
 
-The test suite should be updated to achieve 100% code coverage for the added and refactored functions.
+The test suite should be updated to achieve 100% code coverage for the added and refactored functions. More specifically, in the report (report.md) the requirements are traced to requirements.
