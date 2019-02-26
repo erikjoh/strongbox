@@ -73,8 +73,6 @@ multiple times with `mvn test` multiple tests will fail which didn't fail during
 program compilation. This can be quite an annoyance since the whole project
 takes about 10 minutes to build on a 5:th generation i5 processor.
 
-## Requirements affected by functionality being refactored
-
 ## Existing test cases relating to refactored code
 
 The existing test cases for the `delete` and `undelete` [TrashController](./strongbox-web-core/src/main/java/org/carlspring/strongbox/controllers/TrashController.java) 
