@@ -69,10 +69,12 @@ public class TrashControllerUndeleteTest
         // - Used by testForceDeleteArtifactNotAllowed()
         // - Forced deletions are not allowed
         // - Has enabled trash
-        MutableMavenRepositoryConfiguration mavenRepositoryConfiguration = new MutableMavenRepositoryConfiguration();
+        MutableMavenRepositoryConfiguration mavenRepositoryConfiguration =
+            new MutableMavenRepositoryConfiguration();
         mavenRepositoryConfiguration.setIndexingEnabled(true);
 
-        MutableRepository repositoryWithTrash = mavenRepositoryFactory.createRepository(REPOSITORY_WITH_TRASH);
+        MutableRepository repositoryWithTrash =
+            mavenRepositoryFactory.createRepository(REPOSITORY_WITH_TRASH);
         repositoryWithTrash.setAllowsForceDeletion(false);
         repositoryWithTrash.setTrashEnabled(true);
         repositoryWithTrash.setRepositoryConfiguration(mavenRepositoryConfiguration);
@@ -82,7 +84,8 @@ public class TrashControllerUndeleteTest
         // Notes:
         // - Used by testForceDeleteArtifactAllowed()
         // - Forced deletions are allowed
-        MutableRepository repositoryReleases = mavenRepositoryFactory.createRepository(REPOSITORY_RELEASES);
+        MutableRepository repositoryReleases =
+            mavenRepositoryFactory.createRepository(REPOSITORY_RELEASES);
         repositoryReleases.setAllowsForceDeletion(false);
         repositoryReleases.setRepositoryConfiguration(mavenRepositoryConfiguration);
 
@@ -94,12 +97,14 @@ public class TrashControllerUndeleteTest
     private void setUp()
             throws Exception
     {
-        generateArtifact(getRepositoryBasedir(STORAGE0, REPOSITORY_WITH_TRASH).getAbsolutePath(),
+        generateArtifact(getRepositoryBasedir(STORAGE0, REPOSITORY_WITH_TRASH)
+                         .getAbsolutePath(),
                          "org.carlspring.strongbox.undelete:test-artifact-undelete",
                          new String[]{ "1.0",
                                        "1.1" });
 
-        generateArtifact(getRepositoryBasedir(STORAGE0, REPOSITORY_RELEASES).getAbsolutePath(),
+        generateArtifact(getRepositoryBasedir(STORAGE0, REPOSITORY_RELEASES)
+                         .getAbsolutePath(),
                          "org.carlspring.strongbox.undelete:test-artifact-undelete",
                          new String[]{ "2.0" });
 
@@ -144,8 +149,12 @@ public class TrashControllerUndeleteTest
     public static Set<MutableRepository> getRepositoriesToClean()
     {
         Set<MutableRepository> repositories = new LinkedHashSet<>();
-        repositories.add(createRepositoryMock(STORAGE0, REPOSITORY_WITH_TRASH, Maven2LayoutProvider.ALIAS));
-        repositories.add(createRepositoryMock(STORAGE0, REPOSITORY_RELEASES, Maven2LayoutProvider.ALIAS));
+        repositories.add(createRepositoryMock(STORAGE0,
+                                              REPOSITORY_WITH_TRASH,
+                                              Maven2LayoutProvider.ALIAS));
+        repositories.add(createRepositoryMock(STORAGE0,
+                                              REPOSITORY_RELEASES,
+                                              Maven2LayoutProvider.ALIAS));
 
         return repositories;
     }
@@ -161,8 +170,9 @@ public class TrashControllerUndeleteTest
                                           "+v:1.0 " +
                                           "+p:jar"));
 
-        String url = getContextBaseUrl() + "/api/trash/" + STORAGE0 + "/" + REPOSITORY_WITH_TRASH +
-                     "/org/carlspring/strongbox/undelete/test-artifact-undelete/1.0/test-artifact-undelete-1.0.jar";
+        String url = getContextBaseUrl() + "/api/trash/"
+            + STORAGE0 + "/" + REPOSITORY_WITH_TRASH
+            + "/org/carlspring/strongbox/undelete/test-artifact-undelete/1.0/test-artifact-undelete-1.0.jar";
 
         given().header(HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN_VALUE)
                .when()
@@ -259,5 +269,4 @@ public class TrashControllerUndeleteTest
             throw new IllegalArgumentException("Unsupported content type: " + acceptHeader);
         }
     }
-
 }
