@@ -169,7 +169,11 @@ For us as an external helping hand it's important for the documentation to be we
 
 ## Contributions
 Max: Documentation and report
+
 Anton: Documentation and report
+
 Erik: Setting up repository and Jenkins, refactoring
+
 Nicklas: Responsible for testing
+
 Alan: Refactoring and UML
