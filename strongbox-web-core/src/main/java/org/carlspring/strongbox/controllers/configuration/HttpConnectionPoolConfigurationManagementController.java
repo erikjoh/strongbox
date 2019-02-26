@@ -1,5 +1,6 @@
 package org.carlspring.strongbox.controllers.configuration;
 
+import org.carlspring.strongbox.controllers.RepositoryMapping;
 import org.carlspring.strongbox.controllers.support.NumberOfConnectionsEntityBody;
 import org.carlspring.strongbox.controllers.support.PoolStatsEntityBody;
 import org.carlspring.strongbox.service.ProxyRepositoryConnectionPoolConfigurationService;
@@ -47,27 +48,14 @@ public class HttpConnectionPoolConfigurationManagementController
     @PutMapping(value = "{storageId}/{repositoryId}/{numberOfConnections}",
                 produces = { MediaType.TEXT_PLAIN_VALUE,
                              MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity setNumberOfConnectionsForProxyRepository(@PathVariable(value = "storageId") String storageId,
-                                                                   @PathVariable(value = "repositoryId") String repositoryId,
+    public ResponseEntity setNumberOfConnectionsForProxyRepository(@RepositoryMapping Repository repository,
                                                                    @PathVariable(value = "numberOfConnections") int numberOfConnections,
                                                                    @RequestHeader(HttpHeaders.ACCEPT) String accept)
     {
-        Storage storage = getConfiguration().getStorage(storageId);
-        if (storage == null)
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                 .body(getResponseEntityBody("The storage does not exist!", accept));
-        }
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
 
-        Repository repository = storage.getRepository(repositoryId);
-        if (storage.getRepository(repositoryId) == null)
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                 .body(getResponseEntityBody("The repository does not exist!", accept));
-        }
-
-        if (storage.getRepository(repositoryId)
-                   .getRemoteRepository() == null)
+        if (repository.getRemoteRepository() == null)
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                  .body(getResponseEntityBody("The proxy repository has no associated remote repository.", accept));
@@ -92,26 +80,11 @@ public class HttpConnectionPoolConfigurationManagementController
     @GetMapping(value = "{storageId}/{repositoryId}",
                 produces = { MediaType.TEXT_PLAIN_VALUE,
                              MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity getPoolStatsForProxyRepository(@PathVariable(value = "storageId") String storageId,
-                                                         @PathVariable(value = "repositoryId") String repositoryId,
+    public ResponseEntity getPoolStatsForProxyRepository(@RepositoryMapping Repository repository,
                                                          @RequestHeader(HttpHeaders.ACCEPT) String accept)
     {
-        Storage storage = getConfiguration().getStorage(storageId);
-        if (storage == null)
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                 .body(getResponseEntityBody("The storage does not exist!", accept));
-        }
 
-        Repository repository = storage.getRepository(repositoryId);
-        if (repository == null)
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                 .body(getResponseEntityBody("The repository does not exist!", accept));
-        }
-
-        if (storage.getRepository(repositoryId)
-                   .getRemoteRepository() == null)
+        if (repository.getRemoteRepository() == null)
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                  .body(getResponseEntityBody("Repository doesn't have remote repository!", accept));
