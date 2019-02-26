@@ -31,6 +31,7 @@ import org.carlspring.strongbox.artifact.ArtifactTag;
 import org.carlspring.strongbox.artifact.coordinates.NpmArtifactCoordinates;
 import org.carlspring.strongbox.config.NpmLayoutProviderConfig.NpmObjectMapper;
 import org.carlspring.strongbox.controllers.BaseArtifactController;
+import org.carlspring.strongbox.controllers.RepositoryMapping;
 import org.carlspring.strongbox.data.criteria.Expression.ExpOperator;
 import org.carlspring.strongbox.data.criteria.Paginator;
 import org.carlspring.strongbox.data.criteria.Predicate;
@@ -364,12 +365,13 @@ public class NpmArtifactController extends BaseArtifactController
 
     @PreAuthorize("hasAuthority('ARTIFACTS_DEPLOY')")
     @PutMapping(path = "{storageId}/{repositoryId}/{name:.+}", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity publish(@PathVariable(name = "storageId") String storageId,
-                                  @PathVariable(name = "repositoryId") String repositoryId,
+    public ResponseEntity publish(@RepositoryMapping Repository repository,
                                   @PathVariable(name = "name") String name,
                                   HttpServletRequest request)
         throws Exception
     {
+        String storageId = repository.getStorage().getId();
+        String repositoryId = repository.getId();
         logger.info(String.format("npm publish request for [%s]/[%s]/[%s]", storageId,
                                   repositoryId, name));
         Pair<PackageVersion, Path> packageEntry;
@@ -386,7 +388,6 @@ public class NpmArtifactController extends BaseArtifactController
         PackageVersion packageJson = packageEntry.getValue0();
         Path packageTgz = packageEntry.getValue1();
 
-        Repository repository = getRepository(storageId, repositoryId);
         NpmArtifactCoordinates coordinates = NpmArtifactCoordinates.of(name, packageJson.getVersion());
 
         storeNpmPackage(repository, coordinates, packageJson, packageTgz);
