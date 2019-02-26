@@ -8,6 +8,9 @@ URL: https://github.com/strongbox/strongbox
 
 Strongbox is an Artifact Repository Manager written in Java which allows you to store binary artifacts. It aims to be an easy an reliable platform and supports any repository layout.
 
+## SRS
+Software requirement specification for the refactor: [SRS.md](https://github.com/Eika96/strongbox/blob/doc/SRS.md).
+
 ## Architectural overview (optional, as one item for P+)
 
 The Strongbox project consists of several core modules listed below with its corresponding `README.md` shortly describing its content and purpose: 
