@@ -180,6 +180,11 @@ public class RepositoryMappingArgumentResolverTest
         Exception thrown = assertThrows(RepositoryMappingException.class,
                                         () -> rme.resolveArgument(null, null, nReq, null));
         assertEquals("The specified repository is not in service!", thrown.getMessage());
+
+        verify(mockRepo).isInService();
+        verify(mockStorage).getRepository(repoID);
+        verify(mockConfig).getStorage(storageID);
+        verify(cManager).getConfiguration();
     }
 
     /**
@@ -208,6 +213,10 @@ public class RepositoryMappingArgumentResolverTest
                                         () -> rme.resolveArgument(null, null, nReq, null));
 
         assertEquals("The specified repositoryId does not exist!", thrown.getMessage());
+
+        verify(mockStorage).getRepository(repoID);
+        verify(mockConfig).getStorage(storageID);
+        verify(cManager).getConfiguration();
     }
 
     /**
@@ -232,6 +241,9 @@ public class RepositoryMappingArgumentResolverTest
                                         () -> rme.resolveArgument(null, null, nReq, null));
 
         assertEquals("The specified storageId does not exist!", thrown.getMessage());
+
+        verify(mockConfig).getStorage(storageID);
+        verify(cManager).getConfiguration();
     }
 
     private NativeWebRequest generateMockNativeWebRequest()
