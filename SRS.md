@@ -42,7 +42,7 @@ ID: R1
 
 Title: Happy path
 
-Description: Given a repository id and path if neither R2, R3 or R4 raises errors resolveArgument should return the repository
+Description: Given a storage and respository id for which the storage and repository exists (reference to R2 and R3) and the repository is in service (reference to R4) should return the repository otherwise a RepositoryMappingException exception should be raised which is covered by requirement R2, R3 and R4.
 
 DEP: R2, R3, R4
 
@@ -50,27 +50,27 @@ DEP: R2, R3, R4
 ### Functional requirement 1.2
 ID: R2
 
-Title: Storage existence
+Title: Storage existence check
 
-Description: Given a repository id and path which is located on a non-existant storage an RepositoryMappingException should be raised by resolveArgument
+Description: Given a storage id for a storage which does not exist a RepositoryMappingException exception should be raised by the resolveArgument method (part of the HandlerMethodArgumentResolver interface). Otherwise, the procedure should continue. 
 
 DEP:
 
 ### Functional requirement 1.3
 ID: R3
 
-Title: Repository existence
+Title: Repository existence check
 
-Description: Given a repository id and path which where the repository is invalid RepositoryMappingException should be raised by resolveArgument
+Description: Given a storage instance (depends on R2) and a repository id for a repository which does not exist a RepositoryMappingException exception should be raised by the resolveArgument method (part of the HandlerMethodArgumentResolver interface). Otherwise, the procedure should continue. 
 
 DEP: R2
 
 ### Functional requirement 1.4
 ID: R4
 
-Title: Is in service
+Title: Is in service check
 
-Description: Given a repository id and path which where the repository is not in service an RepositoryMappingException should be raised by resolveArgument
+Description: Given a repository instance (depends on R3) a RepositoryMappingException exception should be raised if the repository is not in service (checked by repository.isInService) by the resolveArgument method (part of the HandlerMethodArgumentResolver interface). Otherwise, the procedure should continue.
 
 DEP: R2, R3
 
