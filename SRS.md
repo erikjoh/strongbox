@@ -14,9 +14,9 @@ References to code within the project are referred not by their full path but us
 
 ## 2 Product perspective
 
-The new repository mapping argument resolver is used by functions in controllers like carlspring/strongbox/controllers/TrashController to ensure the validity of repositories. The use of the argument resolver could be expanded as the operation is done in other parts of the project. However this use is beyond the scope of the issue.
+The issue calls for the new implementation repository mapping to be used by carlspring/strongbox/controllers/TrashController to ensure the validity of repositories and replace duplicated code. However as validity checks of repositories are common the use can be expanded.
 
-The following controllers are affected by the refactor:
+By using the new repository mapping the following controllers are affected by the refactor:
 ```
 BaseArtifactController.java
 BrowseController.java
