@@ -40,7 +40,7 @@ The handler will, given the id of the repository and the path, checks that the s
 ### Functional requirement 1.1
 ID: R1
 
-Title: Happy path
+Title: Return valid repository instance
 
 Description: Given a storage and respository id for which the storage and repository exists (reference to R2 and R3) and the repository is in service (reference to R4) should return the repository otherwise a RepositoryMappingException exception should be raised which is covered by requirement R2, R3 and R4.
 
