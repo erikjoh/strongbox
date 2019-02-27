@@ -77,6 +77,22 @@ takes about 10 minutes to build on a 5:th generation i5 processor.
 
 ## Existing test cases relating to refactored code
 
+The following controllers are affected by the refactor and will use the new annotation `RepositoryMapping`.
+
+```
+BaseArtifactController.java
+BrowseController.java
+RepositoryMappingArgumentResolver.java
+TrashController.java
+ArtifactCoordinateValidatorsManagementController.java
+HttpConnectionPoolConfigurationManagementController.java
+StoragesConfigurationController.java
+NpmArtifactController.java
+NugetArtifactController.java
+```
+
+They are essentially tested in the same way and the testing procedure for `TrashController` is described below. The test procedure for the other controllers work in the same way.
+
 The existing test cases for the `delete` and `undelete` [TrashController](./strongbox-web-core/src/main/java/org/carlspring/strongbox/controllers/TrashController.java) 
 function works by creating artificial repositories with different properties, 
 performing the operations and asserting that the `delete/undelete` operation 
