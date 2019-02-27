@@ -192,8 +192,8 @@ Max: Documentation and report
 
 Anton: Documentation and report
 
-Erik: Setting up repository and Jenkins, refactoring
+Erik: Setting up repository and Jenkins, refactoring, writing report
 
-Nicklas: Responsible for testing
+Nicklas: Responsible for testing, writing report
 
-Alan: Refactoring and UML
+Alan: Refactoring and UML, writing report
